@@ -9,10 +9,11 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 
+import AnimatedSplash from '@/components/AnimatedSplash/AnimatedSplash';
 import RootNavigator from '@/navigation/RootNavigator';
 import { store } from '@/store';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -30,21 +31,20 @@ function Root() {
     Rubik_600SemiBold,
     Rubik_800ExtraBold,
   });
+  const [splashDone, setSplashDone] = useState(false);
 
   useEffect(() => {
     dispatch(loadOnboardingStatus());
   }, [dispatch]);
 
-  const ready = fontsLoaded && hydrated;
-
+  // drop the native splash once fonts load, AnimatedSplash takes over
   useEffect(() => {
-    if (ready) {
+    if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [ready]);
+  }, [fontsLoaded]);
 
-  // wait for fonts and the persisted onboarding flag before showing anything
-  if (!ready) {
+  if (!fontsLoaded) {
     return null;
   }
 
@@ -54,6 +54,9 @@ function Root() {
         <RootNavigator />
         <StatusBar style="dark" />
       </NavigationContainer>
+      {!splashDone && (
+        <AnimatedSplash ready={hydrated} onFinish={() => setSplashDone(true)} />
+      )}
     </SafeAreaProvider>
   );
 }
