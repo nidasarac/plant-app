@@ -1,4 +1,5 @@
 import {
+  Rubik_300Light,
   Rubik_400Regular,
   Rubik_500Medium,
   Rubik_600SemiBold,
@@ -10,13 +11,20 @@ import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
 
 import RootNavigator from '@/navigation/RootNavigator';
+import { store } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { loadOnboardingStatus } from '@/store/slices/onboardingSlice';
 
 SplashScreen.preventAutoHideAsync();
 
-export default function App() {
+function Root() {
+  const dispatch = useAppDispatch();
+  const hydrated = useAppSelector((state) => state.onboarding.hydrated);
   const [fontsLoaded] = useFonts({
+    Rubik_300Light,
     Rubik_400Regular,
     Rubik_500Medium,
     Rubik_600SemiBold,
@@ -24,13 +32,19 @@ export default function App() {
   });
 
   useEffect(() => {
-    if (fontsLoaded) {
+    dispatch(loadOnboardingStatus());
+  }, [dispatch]);
+
+  const ready = fontsLoaded && hydrated;
+
+  useEffect(() => {
+    if (ready) {
       SplashScreen.hideAsync();
     }
-  }, [fontsLoaded]);
+  }, [ready]);
 
-  // keep the splash screen up until Rubik is ready so text doesn't flash in the system font
-  if (!fontsLoaded) {
+  // wait for fonts and the persisted onboarding flag before showing anything
+  if (!ready) {
     return null;
   }
 
@@ -41,5 +55,13 @@ export default function App() {
         <StatusBar style="dark" />
       </NavigationContainer>
     </SafeAreaProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <Provider store={store}>
+      <Root />
+    </Provider>
   );
 }
