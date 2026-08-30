@@ -2,7 +2,7 @@ import { Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
-// every figma frame is 375 x 812
+// figma frame size
 const BASE_WIDTH = 375;
 const BASE_HEIGHT = 812;
 

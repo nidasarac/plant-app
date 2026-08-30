@@ -1,5 +1,4 @@
-// Screens don't take params yet, but the lists are typed so navigate()
-// calls are checked from the start.
+// no route params yet, but typed so navigate() is checked
 
 export type OnboardingStackParamList = {
   GetStarted: undefined;

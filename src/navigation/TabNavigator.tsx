@@ -2,51 +2,34 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View } from 'react-native';
 
 import HomeScreen from '@/features/home/screens/HomeScreen';
+import { colors, fonts } from '@/constants/theme';
+import { moderateScale } from '@/constants/layout';
 
+import CustomTabBar from './CustomTabBar';
 import type { TabParamList } from './types';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
-function DiagnoseScreen() {
+// only Home is real, the rest are stubs
+function Stub({ label }: { label: string }) {
   return (
     <View style={styles.stub}>
-      <Text style={styles.stubText}>Diagnose</Text>
-    </View>
-  );
-}
-
-function ScanScreen() {
-  return (
-    <View style={styles.stub}>
-      <Text style={styles.stubText}>Scan</Text>
-    </View>
-  );
-}
-
-function MyGardenScreen() {
-  return (
-    <View style={styles.stub}>
-      <Text style={styles.stubText}>My Garden</Text>
-    </View>
-  );
-}
-
-function ProfileScreen() {
-  return (
-    <View style={styles.stub}>
-      <Text style={styles.stubText}>Profile</Text>
+      <Text style={styles.stubText}>{label}</Text>
     </View>
   );
 }
 
 export default function TabNavigator() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      tabBar={(props) => <CustomTabBar {...props} />}
+      screenOptions={{ headerShown: false }}
+    >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Diagnose" component={DiagnoseScreen} />
-      <Tab.Screen name="Scan" component={ScanScreen} />
-      <Tab.Screen name="MyGarden" component={MyGardenScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Diagnose">{() => <Stub label="Diagnose" />}</Tab.Screen>
+      <Tab.Screen name="Scan">{() => <Stub label="Scan" />}</Tab.Screen>
+      <Tab.Screen name="MyGarden">{() => <Stub label="My Garden" />}</Tab.Screen>
+      <Tab.Screen name="Profile">{() => <Stub label="Profile" />}</Tab.Screen>
     </Tab.Navigator>
   );
 }
@@ -56,9 +39,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: colors.background,
   },
   stubText: {
-    fontSize: 20,
-    fontWeight: '600',
+    fontFamily: fonts.medium,
+    fontSize: moderateScale(20),
+    color: colors.text,
   },
 });
