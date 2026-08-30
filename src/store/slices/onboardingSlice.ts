@@ -15,12 +15,6 @@ const initialState: OnboardingState = {
 };
 
 export const loadOnboardingStatus = createAsyncThunk('onboarding/load', async () => {
-  // TEMP dev-only: wipe the flag each reload while working on onboarding
-  if (__DEV__) {
-    await AsyncStorage.removeItem(STORAGE_KEY);
-    return false;
-  }
-
   const value = await AsyncStorage.getItem(STORAGE_KEY);
   return value === 'true';
 });
