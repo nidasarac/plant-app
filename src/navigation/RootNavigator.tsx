@@ -1,15 +1,10 @@
-import { useState } from 'react';
+import { useAppSelector } from '@/store/hooks';
 
 import OnboardingNavigator from './OnboardingNavigator';
 import TabNavigator from './TabNavigator';
 
 export default function RootNavigator() {
-  // local until the onboarding slice is added
-  const [onboardingCompleted, setOnboardingCompleted] = useState(false);
+  const completed = useAppSelector((state) => state.onboarding.completed);
 
-  if (onboardingCompleted) {
-    return <TabNavigator />;
-  }
-
-  return <OnboardingNavigator onFinish={() => setOnboardingCompleted(true)} />;
+  return completed ? <TabNavigator /> : <OnboardingNavigator />;
 }

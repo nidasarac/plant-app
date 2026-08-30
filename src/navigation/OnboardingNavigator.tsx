@@ -9,21 +9,14 @@ import type { OnboardingStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<OnboardingStackParamList>();
 
-type OnboardingNavigatorProps = {
-  onFinish: () => void;
-};
-
-export default function OnboardingNavigator({ onFinish }: OnboardingNavigatorProps) {
+export default function OnboardingNavigator() {
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false, gestureEnabled: false }}
-    >
+    // forward-only, no header or back gesture
+    <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
       <Stack.Screen name="GetStarted" component={GetStartedScreen} />
       <Stack.Screen name="OnboardingStepOne" component={OnboardingStepOneScreen} />
       <Stack.Screen name="OnboardingStepTwo" component={OnboardingStepTwoScreen} />
-      <Stack.Screen name="Paywall">
-        {() => <PaywallScreen onClose={onFinish} />}
-      </Stack.Screen>
+      <Stack.Screen name="Paywall" component={PaywallScreen} />
     </Stack.Navigator>
   );
 }
