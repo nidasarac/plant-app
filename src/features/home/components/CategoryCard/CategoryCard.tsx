@@ -12,6 +12,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
   return (
     <View style={styles.card}>
       <Image
+        testID="category-image"
         source={{ uri: category.imageUrl }}
         style={styles.image}
         resizeMode="contain"
