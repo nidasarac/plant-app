@@ -3,6 +3,14 @@
 React Native case for HubX. An onboarding flow (3 screens + paywall) and a home tab
 with a plant category grid, coded from the shared Figma.
 
+<p align="center">
+  <img src="docs/get-started.png" width="180" alt="Get Started" />
+  <img src="docs/onboarding-1.png" width="180" alt="Onboarding 1" />
+  <img src="docs/onboarding-2.png" width="180" alt="Onboarding 2" />
+  <img src="docs/paywall.png" width="180" alt="Paywall" />
+  <img src="docs/home.png" width="180" alt="Home" />
+</p>
+
 ## Run
 
 ```
@@ -11,7 +19,7 @@ npm start
 ```
 
 Press `i` for the iOS simulator, `a` for Android, or scan the QR with Expo Go.
-`npm run typecheck` checks types.
+`npm test` runs the unit tests, `npm run typecheck` checks types.
 
 ## Why these choices
 
@@ -59,8 +67,12 @@ A component stays in its feature folder until something else needs it, then it m
   scan button are the Figma SVGs; Home and Profile are the closest Ionicons.
 - Short animated splash after the native one, matching the live app's loading screen.
 
-## Not done
+## Tests
 
-- Unit tests - the slice reducer, the `transformResponse` normalisation and a card render
-  are the ones worth having.
-- Screenshots / demo gif in this file.
+`jest-expo`, covering the onboarding reducer, the two `transformResponse` mappers, the
+responsive scale helper and a `CategoryCard` render.
+
+## Known gaps
+
+- Home and Profile tab icons are the closest Ionicons, not the exact Figma glyphs
+  (Diagnose, My Garden and the scan button are exported straight from Figma).
