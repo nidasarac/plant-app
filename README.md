@@ -1,7 +1,7 @@
 # PlantApp
 
-React Native case for HubX. An onboarding flow (3 screens + paywall) and a home tab
-with a plant category grid, coded from the shared Figma.
+A small plant-catalog app built with React Native: an onboarding flow (3 screens +
+paywall) and a home tab with a plant category grid, built to a Figma design.
 
 <p align="center">
   <img src="docs/get-started.png" width="180" alt="Get Started" />
@@ -23,12 +23,12 @@ Press `i` for the iOS simulator, `a` for Android, or scan the QR with Expo Go.
 
 ## Why these choices
 
-**Expo, managed workflow.** Nothing in the case needs a custom native module, so there's
-no reason to eject. Setup and builds stay simple and it runs the same on any machine.
+**Expo, managed workflow.** Nothing here needs a custom native module, so there's no
+reason to eject. Setup and builds stay simple and it runs the same on any machine.
 
 **Redux Toolkit + RTK Query.** The only real global state is whether onboarding is done,
 so the slice is tiny. The two network calls go through RTK Query - caching and
-loading/error state come for free and it stays inside Redux, which the case asks for.
+loading/error state come for free and it stays inside Redux.
 
 **AsyncStorage, not redux-persist.** It's one boolean. redux-persist would be a lot of
 wiring for that.
@@ -64,8 +64,8 @@ A component stays in its feature folder until something else needs it, then it m
 - Figma frames are 375x812, so `layout.ts` scales sizes and fonts off the real screen.
   Colors, spacing and type come from `theme.ts` - no bare hex or magic numbers in components.
 - The tab bar is custom (raised scan button, two icon sets). Diagnose, My Garden and the
-  scan button are the Figma SVGs; Home and Profile are the closest Ionicons.
-- Short animated splash after the native one, matching the live app's loading screen.
+  scan button are SVGs from the design; Home and Profile are the closest Ionicons.
+- Short animated loading screen after the native splash.
 
 ## Tests
 
@@ -74,5 +74,5 @@ responsive scale helper and a `CategoryCard` render.
 
 ## Known gaps
 
-- Home and Profile tab icons are the closest Ionicons, not the exact Figma glyphs
-  (Diagnose, My Garden and the scan button are exported straight from Figma).
+- Home and Profile tab icons are the closest Ionicons, not the exact design glyphs
+  (Diagnose, My Garden and the scan button are exported straight from the design).
