@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 
-import { horizontalScale, moderateScale } from '@/constants/layout';
+import { horizontalScale, moderateScale, verticalScale } from '@/constants/layout';
 import { colors, fonts, radii } from '@/constants/theme';
 import type { Category } from '@/types/plant';
 
@@ -15,7 +15,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
         testID="category-image"
         source={{ uri: category.imageUrl }}
         style={styles.image}
-        resizeMode="cover"
+        resizeMode="contain"
       />
       <Text style={styles.title}>{category.title}</Text>
     </View>
@@ -40,13 +40,14 @@ const styles = StyleSheet.create({
     letterSpacing: -0.32,
     color: colors.text,
   },
-  // the api images already sit the plant in the bottom-right with transparent
-  // padding; anchoring the (slightly oversized) image there matches figma
+  // the api images sit the plant in the bottom-right with transparent padding;
+  // contain in a bottom-right box keeps the whole plant in frame (some images,
+  // like the cactus, run right up to their own edge)
   image: {
     position: 'absolute',
-    right: 0,
-    bottom: 0,
-    width: '118%',
-    height: '118%',
+    right: horizontalScale(14),
+    bottom: verticalScale(2),
+    width: '86%',
+    height: '96%',
   },
 });
